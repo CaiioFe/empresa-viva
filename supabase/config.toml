@@ -1,0 +1,18 @@
+# Configuração do Supabase local, usada só pelos testes de banco no GitHub (job "banco").
+# Em produção, tudo mora no schema empresa_viva.
+project_id = "empresa-viva"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public", "empresa_viva"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 17
+
+[auth]
+enabled = true
+site_url = "http://localhost:5174"

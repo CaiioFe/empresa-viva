@@ -1,0 +1,48 @@
+name: Checagens
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: checagens-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: Tipos, testes e build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # Valores de exemplo só pra compilar e testar; nenhum segredo aqui.
+      VITE_SUPABASE_URL: http://127.0.0.1:54321
+      VITE_SUPABASE_ANON_KEY: chave-publica-de-exemplo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  banco:
+    name: Testes de banco (trava de acesso e demonstração)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          # versão fixa: "latest" depende da API do GitHub e falha quando bate o limite
+          version: 2.117.0
+      - run: supabase db start
+      - run: supabase test db
+      - name: Carrega a demonstração num banco limpo
+        run: |
+          psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -v ON_ERROR_STOP=1 -q -f supabase/demonstracao.sql
+          psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -v ON_ERROR_STOP=1 -At -c "select nome, (select count(*) from empresa_viva.lancamentos l where l.empresa_id = e.id), (select count(*) from empresa_viva.lancamentos l where l.empresa_id = e.id and l.categoria_id is null), (select count(*) from empresa_viva.colaboradores c where c.empresa_id = e.id) from empresa_viva.empresas e order by nome"

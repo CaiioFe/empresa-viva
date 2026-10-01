@@ -1,0 +1,21 @@
+node_modules
+dist
+coverage
+*.log
+.vite
+.DS_Store
+
+# segredos e configuração local: nunca vão pro repositório
+.env
+.env.*
+!.env.example
+
+# supabase local
+supabase/.temp
+supabase/.branches
+
+# rascunho de agentes
+scratch/
+
+# vercel (link local do projeto)
+.vercel
