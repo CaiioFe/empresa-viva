@@ -12,7 +12,7 @@ Feito para donos de empresas pequenas e médias (comércio, transportadora, clí
 
 ## O problema
 
-Numa empresa pequena, a informação existe, só que espalhada. O caixa vira uma apostila que chega no mês seguinte, quando a decisão já passou, e alguém escreve à mão por que cada gasto subiu. A história de cada colaborador fica dividida entre pasta, planilha e um teste de perfil contratado por fora, que volta como um PDF que ninguém abre de novo. Ninguém enxerga o todo.
+Numa empresa pequena, a informação existe, só que espalhada. O caixa vira uma apostila que chega no mês seguinte, quando a decisão já passou. Pior: alguém escreve à mão por que cada gasto subiu. A história de cada colaborador fica dividida entre pasta, planilha e um teste de perfil contratado por fora, que volta como um PDF que ninguém abre de novo. Ninguém enxerga o todo.
 
 ## O que o sistema faz
 
